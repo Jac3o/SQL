@@ -1,0 +1,5 @@
+def go_home(): #this makes the back button work by clearing the text boxes and taking the user back to the login page
+	review_W.hide()
+	signup_W.hide()
+	PW_textbox.clear()
+	user_textbox.clear()
