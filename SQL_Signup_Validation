@@ -1,0 +1,30 @@
+def signup_validation():
+	signup_W.show
+	first_name_s = fname_s_textbox.value
+	second_name_s = sname_s_textbox.value
+	
+	if fname_s_textbox.value =="": #checking that something has actually been entered
+		info("Info","Please enter a first name")      
+	elif fname_s_textbox.value.isalpha() ==  False:    #checking if someone has entered a first name with numbers in it
+		info("Info","Please enter a first name with no numbers")
+	else:
+		if sname_s_textbox.value =="": #checking that something has actually been entered
+			info("Info","Please enter a second name")
+		elif sname_s_textbox.value.isalpha() == False:    #checking if someone has entered a second name with numbers in it
+			info("Info","Please enter a second name with no numbers")
+	
+	if username_s.value =="":
+		info("Info","Please enter a username")
+
+	if password_s.value =="":
+		info("Info","Please enter a password")
+	elif len(password_s.value)<8:
+		info("Info","Please enter a password with minimum 8 characters ")   #checking that the password has minimum 8 characters
+
+	if "@" not in email_s.value:
+		info("Info","Please enter a correct email address")
+	else:
+		# Create user
+		sqlinsert = "INSERT INTO user (User_FirstName, user_password, user_secondname, user_email, user_username) VALUES (?, ?, ?, ?, ?)"
+		execute_sql(database_file, sqlinsert, (fname_s_textbox.value, password_s.value, sname_s_textbox.value, email_s.value,username_s.value))
+		info("Info","Account created")
