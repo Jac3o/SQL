@@ -1,0 +1,20 @@
+def login_user():  #### TEST WITH 'or 1 = 1; -- 
+	
+	global user_LoggedIn ## variable needed to know who logged in ##
+	if user_textbox.value == "":
+		info("Error", "You must enter a valid username")
+	elif PW_textbox.value == "":
+		info("Error", "You must enter a password")
+	sqlselect = "SELECT * FROM user WHERE user_username = '"+user_textbox.value+"'" #
+	rows = query_database(database_file, sqlselect)
+	
+	if len(rows) == 0: ### this checks that the user is found
+			info ("Error", "Wrong username or password")
+	else:
+		info("Info", "Correct Username")
+		store_pw=rows[0][2]
+		if PW_textbox.value == store_pw:
+			info("Info", "Welcome to review page")  #checking if password is the same as the saved password
+			open_review()
+		else:
+			info("Error","Password incorrect")
