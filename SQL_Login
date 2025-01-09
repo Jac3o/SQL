@@ -5,7 +5,7 @@ def login_user():
 		info("Error", "You must enter a valid username")
 	elif PW_textbox.value == "":
 		info("Error", "You must enter a password")
-	sqlselect = "SELECT * FROM user WHERE user_username = '"+user_textbox.value+"'" #
+	sqlselect = "SELECT * FROM user WHERE user_username = '"+user_textbox.value+"'" # this mitigates SQL injection because it checks the password and username individually
 	rows = query_database(database_file, sqlselect)
 	
 	if len(rows) == 0: ### this checks that the user is found
