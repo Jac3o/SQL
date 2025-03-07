@@ -1,20 +1,27 @@
 def login_user():  
 	# this logs in the user
 	global user_LoggedIn ## variable needed to know who logged in ##
+	global prem_user
 	if user_textbox.value == "":
 		info("Error", "You must enter a valid username")
 	elif PW_textbox.value == "":
 		info("Error", "You must enter a password")
-	sqlselect = "SELECT * FROM user WHERE user_username = '"+user_textbox.value+"'" # this mitigates SQL injection because it checks the password and username individually
+	sqlselect = "SELECT * FROM user WHERE User_Username = '"+user_textbox.value+"'" # this mitigates SQL injection because it checks the password and username individually
 	rows = query_database(database_file, sqlselect)
 	
 	if len(rows) == 0: ### this checks that the user is found
-			info ("Error", "Wrong username or password")
+			info ("Error", "Wrong username or password")  #security stopping people accessing accounts that are not theirs
 	else:
 		info("Info", "Correct Username")
-		store_pw=rows[0][2]
+		store_pw=rows[0][4]
 		if PW_textbox.value == store_pw:
-			info("Info", "Welcome to review page")  #checking if password is the same as the saved password
-			open_review()
+			user_LoggedIn = rows[0][0]
+			if rows[0][7] == "True":
+				prem_user = True
+			print (user_LoggedIn)
+			print (prem_user) #for testing
+			info("Info", "Welcome to Toka Fitness ")  #checking if password is the same as the saved password
+			checkprem()
+			open_dashboard()
 		else:
 			info("Error","Password incorrect")
