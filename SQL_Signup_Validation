@@ -1,4 +1,5 @@
 def signup_validation():
+	# This function validates the sign up information
 	signup_W.show
 	first_name_s = fname_s_textbox.value
 	second_name_s = sname_s_textbox.value
@@ -16,15 +17,23 @@ def signup_validation():
 	if username_s.value =="":
 		info("Info","Please enter a username")
 
-	if password_s.value =="":
+	elif password_s.value =="":
 		info("Info","Please enter a password")
 	elif len(password_s.value)<8:
 		info("Info","Please enter a password with minimum 8 characters ")   #checking that the password has minimum 8 characters
 
-	if "@" not in email_s.value:
+	elif date_validate(DOB_s.value) == False:
+		info("Error", "You must enter a valid date of birth!")
+	
+	elif BirthDay (DOB_s.value) < 13:
+		info("Error", "You must be over 13 to create an account") #the user has to be over 13 as this is the legal age that you are responsible for your own data
+	
+	elif "@" not in email_s.value:
 		info("Info","Please enter a correct email address")
 	else:
 		# Create user
-		sqlinsert = "INSERT INTO user (User_FirstName, user_password, user_secondname, user_email, user_username) VALUES (?, ?, ?, ?, ?)"
-		execute_sql(database_file, sqlinsert, (fname_s_textbox.value, password_s.value, sname_s_textbox.value, email_s.value,username_s.value))
+		sqlinsert = "INSERT INTO user (User_FirstName, User_Surname, User_Username, User_Password, User_Email, User_Birthday) VALUES (?, ?, ?, ?, ?, ?)"
+		execute_sql(database_file, sqlinsert, (fname_s_textbox.value, sname_s_textbox.value, username_s.value, password_s.value, email_s.value, DOB_s.value))
 		info("Info","Account created")
+		signup_W.hide()
+		app.show()
